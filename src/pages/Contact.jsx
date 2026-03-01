@@ -1,12 +1,25 @@
+import { useState } from 'react';
 import { Phone, Mail, MapPin, Send, MessageCircle } from 'lucide-react';
 import useScrollAnimation from '../hooks/useScrollAnimation';
 
 const Contact = () => {
   const scrollRef = useScrollAnimation();
+  const [form, setForm] = useState({ nama: '', kontak: '', paket: '', pesan: '' });
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Terima kasih! Pesan Anda telah terkirim. Kami akan menghubungi Anda segera.");
+    const message =
+      `Halo AKBAR'S SOLUTION,%0A%0A` +
+      `Saya ingin konsultasi/memesan layanan.%0A%0A` +
+      `*Nama:* ${form.nama}%0A` +
+      `*Email/WA:* ${form.kontak}%0A` +
+      `*Paket:* ${form.paket}%0A` +
+      `*Detail:* ${form.pesan}`;
+    window.open(`https://wa.me/6289681587936?text=${message}`, '_blank');
   };
 
   return (
@@ -65,31 +78,31 @@ const Contact = () => {
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label>Nama Lengkap</label>
-                  <input type="text" placeholder="Masukkan nama Anda" required />
+                  <input type="text" name="nama" value={form.nama} onChange={handleChange} placeholder="Masukkan nama Anda" required />
                 </div>
 
                 <div className="form-group">
                   <label>Email / No. WhatsApp</label>
-                  <input type="text" placeholder="email@perusahaan.com atau 08xx" required />
+                  <input type="text" name="kontak" value={form.kontak} onChange={handleChange} placeholder="email@perusahaan.com atau 08xx" required />
                 </div>
 
                 <div className="form-group">
                   <label>Pilihan Paket</label>
-                  <select required>
+                  <select name="paket" value={form.paket} onChange={handleChange} required>
                     <option value="">Pilih Paket</option>
-                    <option value="digital-presence">Paket Digital Presence (Rp 525.000)</option>
-                    <option value="umkm-modern">Paket UMKM Modern (Rp 1.000.000)</option>
-                    <option value="bisnis-essential">Paket Bisnis Essential (Rp 1.500.000)</option>
-                    <option value="profesional">Paket Profesional (Rp 2.525.000)</option>
-                    <option value="profesional-plus">Paket Profesional Plus (Rp 5.000.000)</option>
-                    <option value="ekspansi-high">Paket Ekspansi High (Rp 7.500.000)</option>
-                    <option value="custom">Paket Custom (Konsultasi)</option>
+                    <option value="Paket Digital Presence (Rp 525.000)">Paket Digital Presence (Rp 525.000)</option>
+                    <option value="Paket UMKM Modern (Rp 1.000.000)">Paket UMKM Modern (Rp 1.000.000)</option>
+                    <option value="Paket Bisnis Essential (Rp 1.500.000)">Paket Bisnis Essential (Rp 1.500.000)</option>
+                    <option value="Paket Profesional (Rp 2.525.000)">Paket Profesional (Rp 2.525.000)</option>
+                    <option value="Paket Profesional Plus (Rp 5.000.000)">Paket Profesional Plus (Rp 5.000.000)</option>
+                    <option value="Paket Ekspansi High (Rp 7.500.000)">Paket Ekspansi High (Rp 7.500.000)</option>
+                    <option value="Paket Custom (Konsultasi)">Paket Custom (Konsultasi)</option>
                   </select>
                 </div>
 
                 <div className="form-group">
                   <label>Pesan / Detail Kebutuhan</label>
-                  <textarea rows="5" placeholder="Ceritakan kebutuhan bisnis Anda..." required></textarea>
+                  <textarea name="pesan" value={form.pesan} onChange={handleChange} rows="5" placeholder="Ceritakan kebutuhan bisnis Anda..." required></textarea>
                 </div>
 
                 <button type="submit" className="btn btn-primary w-full btn-lg">
